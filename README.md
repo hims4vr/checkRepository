@@ -1,4 +1,0 @@
-checkRepository
-===============
-
-Test Purpose
