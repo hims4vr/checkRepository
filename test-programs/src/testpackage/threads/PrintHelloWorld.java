@@ -6,10 +6,23 @@ public class PrintHelloWorld {
 		
 			StringBuffer helloOK = new StringBuffer("1");
 			
+			PrintTask1 lets = null;
+			
+			if(null != lets)
+				System.out.println("abc");
+			
+			
+			
 			Thread t1 = new Thread(new PrintTask1(helloOK),"helloThread");
 			Thread t2 = new Thread(new TaskWorld12(helloOK),"worldThread");
 			t2.start();
 			t1.start();
+			
+			while(t1.isAlive() || t2.isAlive()) {
+				System.out.println("Thread state :"+t1.getName()+" : "+t1.getState().name());
+				System.out.println("Thread state :"+t2.getName()+" : "+t2.getState().name());
+			}
+			
 //			t1.interrupt();
 //			t2.interrupt();
 		}
@@ -20,6 +33,10 @@ public class PrintHelloWorld {
 		
 		private StringBuffer lock;
 		
+		public StringBuffer getLock() {
+			return lock;
+		}
+
 		public PrintTask1(StringBuffer lock) {
 			super();
 			this.lock = lock;
@@ -34,26 +51,26 @@ public class PrintHelloWorld {
 			
 			synchronized (lock) {
 				while(ii<10) {
-				System.out.println(Thread.currentThread().getName() + ": loop starts "+ii);
+//				System.out.println(Thread.currentThread().getName() + ": loop starts "+ii);
 					if(lock.length()>0) {
-						System.out.print("Hello ");
+						System.out.println("Hello ");
 						lock.deleteCharAt(0);
 						ii++;
 //						lock.notifyAll();
 					}
 					else {
 						try {
-							System.out.println(Thread.currentThread().getName() + ": calls wait");
+//							System.out.println(Thread.currentThread().getName() + ": calls wait");
 							lock.wait();
-							System.out.println(Thread.currentThread().getName() + ": after wait");
+//							System.out.println(Thread.currentThread().getName() + ": after wait");
 						} catch (InterruptedException e) {
-							System.out.println(Thread.currentThread().getName() + ": interupted");
+//							System.out.println(Thread.currentThread().getName() + ": interupted");
 //							e.printStackTrace();
 						}
 					}
 					lock.notifyAll();
 				}
-				System.out.println(Thread.currentThread().getName() + ": loop ends "+ii);
+//				System.out.println(Thread.currentThread().getName() + ": loop ends "+ii);
 			}
 		}
 	}
@@ -77,7 +94,7 @@ public class PrintHelloWorld {
 		synchronized (lock) {
 			while(ii<10) {
 				
-				System.out.println(Thread.currentThread().getName() + ": loop starts "+ii);
+//				System.out.println(Thread.currentThread().getName() + ": loop starts "+ii);
 				
 					if(lock.length()==0) {
 						System.out.println("World");
@@ -87,18 +104,18 @@ public class PrintHelloWorld {
 					}
 					else {
 						try {
-							System.out.println(Thread.currentThread().getName() + ": calls wait");
+//							System.out.println(Thread.currentThread().getName() + ": calls wait");
 							lock.wait();
-							System.out.println(Thread.currentThread().getName() + ": after wait");
+//							System.out.println(Thread.currentThread().getName() + ": after wait");
 
 						} catch (InterruptedException e) {
-							System.out.println(Thread.currentThread().getName() + ": interupted");
+//							System.out.println(Thread.currentThread().getName() + ": interupted");
 //							e.printStackTrace();
 						}
 					}
 					lock.notifyAll();	
 			}
-				System.out.println(Thread.currentThread().getName() + ": loop ends "+ii);
+//				System.out.println(Thread.currentThread().getName() + ": loop ends "+ii);
 			}
 		}
 	}
