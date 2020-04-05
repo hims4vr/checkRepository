@@ -26,7 +26,8 @@ public class LongestIncreasingSubsequence {
 	
 	
 	public static void main(String[] args) {
-		longestIncreasingSubsequence(new int[] {0,4,12,2,10,6,9,13,3,11,7,15});
+		int bb = longestIncreasingSubsequence(new int[] {0,4,12,2,10,6,9,13,3,11,7,15});
+		System.out.println(bb);
 	}
 	
 	
@@ -49,11 +50,15 @@ public class LongestIncreasingSubsequence {
 			 dataArr[i].add(arr[i]);
 		 }
 		 
-		 for (int i = 0; i < dataArr.length; i++) { 
+		 
+		 int maxlengthSequence = 0;
+		 for (int i = 0; i < dataArr.length; i++) {
 			 System.out.println(dataArr[i]);
+			 if(dataArr[i].size()>maxlengthSequence)
+				 maxlengthSequence = dataArr[i].size();
 	     }
 		 
-		 return 0;
+		 return maxlengthSequence;
 	 }
 	
 }
