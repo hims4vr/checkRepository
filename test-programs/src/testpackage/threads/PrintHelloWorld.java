@@ -1,10 +1,30 @@
 package testpackage.threads;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class PrintHelloWorld {
 
 		public static void main(String[] args) {
 		
 			StringBuffer helloOK = new StringBuffer("1");
+			
+//			TreeMap<K, V>
+//			Collections
+//			String			
+			
+			ExecutorService ee = Executors.newFixedThreadPool(2);
+			Runnable rr = () -> System.out.println();
+			Callable<Object> ss = () -> {
+				System.out.println();
+				return null;
+			};
+			
+			Future<?>  dd= ee.submit(rr);
+
+			
 			
 			PrintTask1 lets = null;
 			
