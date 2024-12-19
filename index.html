@@ -7,9 +7,12 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
         function handleCredentialResponse(response) {
-            console.log("response:", response);
             const data = JSON.parse(atob(response.credential.split(".")[1]));
             console.log("User Info:", data);
+
+            // Save credential and user info to session storage
+            sessionStorage.setItem('userCredential', response.credential);
+            sessionStorage.setItem('userInfo', JSON.stringify(data));
 
             // Display user info
             document.getElementById("user-info").innerHTML = `
@@ -36,7 +39,23 @@
             google.accounts.id.prompt(); // Optional: to automatically prompt the user
         }
 
-        window.onload = initializeGoogleSignIn;
+         function loadUserInfo() {
+            const savedData = sessionStorage.getItem('userInfo');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById("user-info").innerHTML = `
+                    <h3>Welcome back, ${data.name}</h3>
+                    <img src="${data.picture}" alt="Profile Picture">
+                    <p>Email: ${data.email}</p>
+                `;
+            }
+        }
+
+        window.onload = function() {
+            loadUserInfo();
+            initializeGoogleSignIn();
+        };
+
     </script>
 </head>
 <body>
