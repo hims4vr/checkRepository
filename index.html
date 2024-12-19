@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In Example</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            const data = JSON.parse(atob(response.credential.split(".")[1]));
+            console.log("User Info:", data);
+
+            // Display user info
+            document.getElementById("user-info").innerHTML = `
+                <h3>Welcome, ${data.name}</h3>
+                <img src="${data.picture}" alt="Profile Picture">
+                <p>Email: ${data.email}</p>
+            `;
+        }
+
+        function initializeGoogleSignIn() {
+            google.accounts.id.initialize({
+                client_id: "382060094950-ioj3fmkepl8hqg1o6vam1shcpk1n6c2l.apps.googleusercontent.com", // Replace with your client ID
+                callback: handleCredentialResponse
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin"),
+                {
+                    theme: "outline",
+                    size: "large"
+                }
+            );
+
+            google.accounts.id.prompt(); // Optional: to automatically prompt the user
+        }
+
+        window.onload = initializeGoogleSignIn;
+    </script>
+</head>
+<body>
+    <h1>Google Sign-In Demo</h1>
+    <div id="google-signin"></div>
+    <div id="user-info"></div>
+</body>
+</html>
