@@ -7,7 +7,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script>
         function handleCredentialResponse(response) {
-            console.log(response:", response);
+            console.log("response:", response);
             const data = JSON.parse(atob(response.credential.split(".")[1]));
             console.log("User Info:", data);
 
